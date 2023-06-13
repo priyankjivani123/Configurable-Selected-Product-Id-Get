@@ -1,0 +1,28 @@
+<script type="text/javascript">
+                requirejs(['jquery','underscore'], function(jQuery,_){
+                jQuery( ".product-options-wrapper div" ).on("click", function() {
+                selpro();
+                });
+                function selpro () {
+                    var selected_options = {};
+                    jQuery('div.swatch-attribute').each(function(k,v){
+                        var attribute_id    = jQuery(v).attr('data-attribute-id');
+                        var option_selected = jQuery(v).attr('data-option-selected');
+                        if(!attribute_id || !option_selected){ return;}
+                        selected_options[attribute_id] = option_selected.toString();
+                    });
+                    var product_id_index = jQuery('[data-role=swatch-options]').data('mage-SwatchRenderer').options.jsonConfig.index;
+                    var selectedSimpleProductId = '';
+                    jQuery.each(product_id_index, function(product_id,attributes){
+                        var productIsSelected = function(attributes, selected_options){
+                            return _.isEqual(attributes, selected_options);
+                        }
+                        if(productIsSelected(attributes, selected_options)){
+                            selectedSimpleProductId = product_id;
+                        } 
+                    });
+                
+                 window.alert(selectedSimpleProductId);
+                }
+            }); 
+</script>
